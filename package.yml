@@ -1,0 +1,11 @@
+package: minify_images
+version: '1.0.0'
+author: Friends Of REDAXO
+supportpage: github.com/FriendsOfREDAXO/minify_images
+
+page:
+    title: 'translate:title'
+    perm: minify_images[]
+    pjax: true
+    subpages:
+        config: { title: 'translate:config', perm: minify_images[config] }
