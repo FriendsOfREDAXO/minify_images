@@ -3,7 +3,7 @@
 	
 	if (rex_post('config-submit', 'boolean')) {
 		$this->setConfig(rex_post('config', [
-			['tinify_active', 'bool'],
+			['optimization_tool', 'string'],
 			['tinify_key', 'string'],
 		]));
 
@@ -16,12 +16,20 @@
 	
 	$formElements = [];
 	
-	//Start - tinify_active
+	//Start - optimization_tool
 		$n = [];
-		$n['label'] = '<label for="minify-config-tinify_active">'.$this->i18n('config_tinify_active').'</label>';
-		$n['field'] = '<input type="checkbox" id="minify-config-tinify_active" name="config[tinify_active]" value="1" '.($this->getConfig('tinify_active') ? ' checked="checked"' : '').'>';
+		$n['label'] = '<label for="minify-config-optimization_tool">'.$this->i18n('config_optimization_tool').'</label>';
+		$select = '';
+		$select .= '<select id="minify-config-optimization_tool" name="config[optimization_tool]">';
+		$select .= '  <option value="none">---</option>';
+		$select .= '  <option value="ImageOptimizer" '.(($this->getConfig('optimization_tool') == 'ImageOptimizer') ? 'selected="selected"' : '').'>ImageOptimizer (pngquant / optipng / pngcrush / pngout / advpng / jpegtran / jpegoptim / gifsicle)</option>';
+		$select .= '  <option value="Tinify" '.(($this->getConfig('optimization_tool') == 'Tinify') ? 'selected="selected"' : '').'>Tinify (tinyJPEG / tinyPNG)</option>';
+		$select .= '  <option value="Imagick" '.(($this->getConfig('optimization_tool') == 'Imagick') ? 'selected="selected"' : '').'>Imagemagick</option>';
+		$select .= '</select>';
+		
+		$n['field'] = $select;
 		$formElements[] = $n;
-	//End - tinify_active
+	//End - optimization_tool
 	
 	//Start - tinify_key
 		$n = [];

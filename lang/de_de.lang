@@ -1,7 +1,7 @@
 minify_images_title = Minify (Bilder)
 
 minify_images_config = Konfiguration
-minify_images_config_tinify_active = Tinify Effekt aktiv?
+minify_images_config_optimization_tool = Optimierungstool
 minify_images_config_tinify_key = Tinify Key<br><i>https://tinypng.com/developers</i>
 minify_images_config_action_save = Speichern
 minify_images_config_saved = Einstellungen wurden gespeichert!
