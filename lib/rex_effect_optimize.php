@@ -15,7 +15,7 @@
 					imagejpeg($this->media->getImage(), $filepath, rex_config::get('media_manager', 'jpg_quality', 80));
 				break;
 				case 'png':
-					imagepng($this->media->getImage(), $filepath, rex_config::get('media_manager', 'jpg_quality', 80));
+					imagepng($this->media->getImage(), $filepath, rex_config::get('media_manager', 'png_compression', 5));
 				break;
 				case 'gif':
 					imagegif($this->media->getImage(), $filepath);
