@@ -19,7 +19,6 @@ Der Dienst ist kostenpflichtig, eine Anmeldung ist erforderlich. Der API Key wir
 
 * [Friends Of REDAXO](https://github.com/FriendsOfREDAXO) Gemeinsame REDAXO-Entwicklung!
 * [Thomas Kaegi](https://github.com/phoebusryan) für die Entwicklung
-* [Thomas Skerbis ](http://klxm.de)
 * [Dirk Schürjohann](https://github.com/schuer)
 
 ---
