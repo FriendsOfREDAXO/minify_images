@@ -9,3 +9,6 @@ page:
     pjax: true
     subpages:
         config: { title: 'translate:config', perm: minify_images[config] }
+        
+requires:
+    redaxo: '^5.1'
