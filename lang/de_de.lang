@@ -2,12 +2,13 @@ minify_images_title = Minify (Bilder)
 
 minify_images_config = Konfiguration
 minify_images_config_optimization_tool = Optimierungstool
-minify_images_config_tinify_key = Tinify Key<br><i>https://tinypng.com/developers</i>
-minify_images_config_action_save = Speichern
+minify_images_config_tinify_key = Tinify Key
+minify_images_config_tinify_key_note = https://tinypng.com/developers
+minify_images_config_save = Speichern
 minify_images_config_saved = Einstellungen wurden gespeichert!
 
 minify_images_effect_define_quality_quality = Qualität
 
 #permissions
-perm_general_minify_images[] = Rechte für Minify (Bilder)-Addon
-perm_general_minify_images[config] = Rechte für die Seite 'Konfiguration' des Minify (Bilder)-Addons
+perm_general_minify_images[] = Rechte für Minify (Bilder)-AddOn
+perm_general_minify_images[config] = Rechte für die Seite 'Konfiguration' des Minify (Bilder)-AddOns
