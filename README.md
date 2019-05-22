@@ -2,6 +2,7 @@
 
 Das AddOn stellt einen __Effekt für REDAXOs Media Manager__ zur Verfügung, über den Bilder optimiert werden können. Die Optimierung kann direkt auf dem Server oder über einen externen Dienst (TinyPNG) erfolgen.
 
+![Screenshot](https://raw.githubusercontent.com/FriendsOfREDAXO/minify_images/assets/minify_images_01.png)
 
 ### Anwendung
 
