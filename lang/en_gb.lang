@@ -1,8 +1,10 @@
 minify_images_title = Minify (Images)
 
 minify_images_config = Configuration
+minify_images_readme = Help and documentation
+
 minify_images_config_optimization_tool = Optimization tool
-minify_images_config_tinify_key = Tinify Key
+minify_images_config_tinify_key = Tinify API key
 minify_images_config_tinify_key_note = https://tinypng.com/developers
 minify_images_config_save = Save
 minify_images_config_saved = Settings successfully saved!
@@ -10,3 +12,6 @@ minify_images_config_saved = Settings successfully saved!
 #permissions
 perm_general_minify_images[] = Permissions for the Minify (images) addOn
 perm_general_minify_images[config] = Permissions for the page 'configuration' of the Minify (images) addOn
+
+#effects
+minify_images_effect_optimize = Image: Minify

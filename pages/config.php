@@ -31,9 +31,9 @@
     $sel_optimization_tool->setAttribute('class', 'form-control selectpicker');
     $sel_optimization_tool->setSelected($this->getConfig('optimization_tool'));
     $sel_optimization_tool->addOption('', 'none');
-    $sel_optimization_tool->addOption('ImageOptimizer (pngquant / optipng / pngcrush / pngout / advpng / jpegtran / jpegoptim / gifsicle)', 'ImageOptimizer');
+    $sel_optimization_tool->addOption('ImageOptimizer (optipng / pngquant / jpegoptim / svgo / …)', 'ImageOptimizer');
     $sel_optimization_tool->addOption('Tinify (tinyJPEG / tinyPNG)', 'Tinify');
-    $sel_optimization_tool->addOption('Imagemagick', 'Imagick');
+    $sel_optimization_tool->addOption('ImageMagick', 'Imagick');
 
     $n = [];
     $n['label'] = '<label for="minify-config-optimization_tool">' . $this->i18n('config_optimization_tool') . '</label>';
