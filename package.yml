@@ -9,6 +9,7 @@ page:
     pjax: true
     subpages:
         config: { title: 'translate:config', perm: minify_images[config] }
-        
+        readme: { title: translate:readme, subPath: README.md }
+
 requires:
     redaxo: '^5.1'
