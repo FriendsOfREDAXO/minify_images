@@ -1,95 +1,97 @@
 <?php
-	class rex_effect_optimize extends rex_effect_abstract {
-		private $addonName = 'minify_images';
 
-		public function execute() {
-			$this->media->asImage();
+class rex_effect_optimize extends rex_effect_abstract
+{
+    private $addonName = 'minify_images';
 
-			$format = $this->media->getFormat();
-			$filepath = rex_path::addonCache($this->addonName,'temp_'.microtime());
+    public function execute()
+    {
+        $this->media->asImage();
 
-			rex_dir::create(dirname($filepath));
+        $format = $this->media->getFormat();
+        $filepath = rex_path::addonCache($this->addonName, 'temp_' . microtime());
 
-			switch ($format) {
-				case 'jpeg':
-					imagejpeg($this->media->getImage(), $filepath, rex_config::get('media_manager', 'jpg_quality', 80));
-				break;
-				case 'png':
-					imagepng($this->media->getImage(), $filepath, rex_config::get('media_manager', 'png_compression', 5));
-				break;
-				case 'gif':
-					imagegif($this->media->getImage(), $filepath);
-				break;
-			}
+        rex_dir::create(dirname($filepath));
 
-			switch (rex_addon::get($this->addonName)->getConfig('optimization_tool')) {
+        switch ($format) {
+            case 'jpeg':
+                imagejpeg($this->media->getImage(), $filepath, rex_config::get('media_manager', 'jpg_quality', 80));
+                break;
+            case 'png':
+                imagepng($this->media->getImage(), $filepath, rex_config::get('media_manager', 'png_compression', 5));
+                break;
+            case 'gif':
+                imagegif($this->media->getImage(), $filepath);
+                break;
+        }
 
-                case 'ImageOptimizer':
-					try {
-						$factory = new \ImageOptimizer\OptimizerFactory([
-							'ignore_errors' => false,
-						]);
-						$optimizer = $factory->get();
-						$optimizer->optimize($filepath);
-					} catch (Exception $e) {
+        switch (rex_addon::get($this->addonName)->getConfig('optimization_tool')) {
+
+            case 'ImageOptimizer':
+                try {
+                    $factory = new \ImageOptimizer\OptimizerFactory([
+                        'ignore_errors' => false,
+                    ]);
+                    $optimizer = $factory->get();
+                    $optimizer->optimize($filepath);
+                } catch (Exception $e) {
+                    rex_logger::logException($e);
+                }
+                break;
+
+            case 'Imagick':
+                if (!extension_loaded('imagick')) {
+                    rex_logger::logError(E_WARNING, 'Minify: ImageMagick selected but not available', __FILE__, __LINE__);
+                } else {
+                    try {
+                        $iMagick = new Imagick();
+                        $iMagick->readImage($filepath);
+                        $iMagick->optimizeImageLayers();
+
+                        switch ($format) {
+                            case 'jpeg':
+                                $iMagick->setImageCompression(Imagick::COMPRESSION_JPEG);
+                                break;
+                            case 'png':
+                                $iMagick->setImageCompression(Imagick::COMPRESSION_UNDEFINED);
+                                break;
+                            case 'gif':
+                                $iMagick->setImageCompression(Imagick::COMPRESSION_UNDEFINED);
+                                break;
+                        }
+
+                        $iMagick->setImageCompressionQuality(rex_config::get('media_manager', 'jpg_quality', 80));
+                        $iMagick->stripImage();
+                        $iMagick->writeImages($filepath, true);
+                    } catch (Exception $e) {
                         rex_logger::logException($e);
-					}
+                    }
+                }
                 break;
 
-                case 'Imagick':
-                    if (!extension_loaded('imagick')) {
-                        rex_logger::logError(E_WARNING, 'Minify: ImageMagick selected but not available', __FILE__, __LINE__);
+            case 'Tinify':
+                $key = rex_addon::get($this->addonName)->getConfig('tinify_key');
+                if (!$key) {
+                    rex_logger::logError(E_WARNING, 'Minify: Tinify selected but no API key provided', __FILE__, __LINE__);
+                } else {
+                    try {
+                        \Tinify\Tinify::setKey($key);
+                        \Tinify\validate();
+                        \Tinify\fromFile($filepath)->toFile($filepath);
+                    } catch (\Tinify\Exception $e) {
+                        rex_logger::logException($e);
                     }
-                    else {
-                        try {
-                            $iMagick = new Imagick();
-                            $iMagick->readImage($filepath);
-                            $iMagick->optimizeImageLayers();
-
-                            switch ($format) {
-                                case 'jpeg':
-                                    $iMagick->setImageCompression(Imagick::COMPRESSION_JPEG);
-                                break;
-                                case 'png':
-                                    $iMagick->setImageCompression(Imagick::COMPRESSION_UNDEFINED);
-                                break;
-                                case 'gif':
-                                    $iMagick->setImageCompression(Imagick::COMPRESSION_UNDEFINED);
-                                break;
-                            }
-
-                            $iMagick->setImageCompressionQuality(rex_config::get('media_manager', 'jpg_quality', 80));
-                            $iMagick->stripImage();
-                            $iMagick->writeImages($filepath, true);
-                        } catch (Exception $e) {
-                            rex_logger::logException($e);
-                        }
-                    }
+                }
                 break;
-
-                case 'Tinify':
-                    $key = rex_addon::get($this->addonName)->getConfig('tinify_key');
-                    if (!$key) {
-                        rex_logger::logError(E_WARNING, 'Minify: Tinify selected but no API key provided', __FILE__, __LINE__);
-                    }
-                    else {
-                        try {
-                            \Tinify\Tinify::setKey($key);
-                            \Tinify\validate();
-                            \Tinify\fromFile($filepath)->toFile($filepath);
-                        } catch(\Tinify\Exception $e) {
-                            rex_logger::logException($e);
-                        }
-                    }
-                break;
-            }
-
-			$this->media->setImage(imagecreatefromstring(rex_file::get($filepath)));
-
-			unlink($filepath);
         }
 
-        public function getName() {
-            return rex_i18n::msg('minify_images_effect_optimize');
-        }
-	}
+        $this->media->setImage(imagecreatefromstring(rex_file::get($filepath)));
+
+        unlink($filepath);
+    }
+
+    public function getName()
+    {
+        return rex_i18n::msg('minify_images_effect_optimize');
+    }
+}
