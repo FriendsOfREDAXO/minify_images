@@ -1,0 +1,7 @@
+{
+    "name": "friendsofredaxo/minify_images",
+    "require": {
+        "ps/image-optimizer": "^2.0",
+        "tinify/tinify": "^1.5"
+    }
+}
