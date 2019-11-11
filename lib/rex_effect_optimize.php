@@ -1,5 +1,10 @@
 <?php
 
+use ImageOptimizer\OptimizerFactory;
+use Tinify\Tinify;
+use function Tinify\fromFile;
+use function Tinify\validate;
+
 class rex_effect_optimize extends rex_effect_abstract
 {
     private $addonName = 'minify_images';
@@ -29,7 +34,7 @@ class rex_effect_optimize extends rex_effect_abstract
 
             case 'ImageOptimizer':
                 try {
-                    $factory = new \ImageOptimizer\OptimizerFactory([
+                    $factory = new OptimizerFactory([
                         'ignore_errors' => false,
                     ]);
                     $optimizer = $factory->get();
@@ -52,10 +57,7 @@ class rex_effect_optimize extends rex_effect_abstract
                             case 'jpeg':
                                 $iMagick->setImageCompression(Imagick::COMPRESSION_JPEG);
                                 break;
-                            case 'png':
-                                $iMagick->setImageCompression(Imagick::COMPRESSION_UNDEFINED);
-                                break;
-                            case 'gif':
+                            default:
                                 $iMagick->setImageCompression(Imagick::COMPRESSION_UNDEFINED);
                                 break;
                         }
@@ -75,9 +77,9 @@ class rex_effect_optimize extends rex_effect_abstract
                     rex_logger::logError(E_WARNING, 'Minify: Tinify selected but no API key provided', __FILE__, __LINE__);
                 } else {
                     try {
-                        \Tinify\Tinify::setKey($key);
-                        \Tinify\validate();
-                        \Tinify\fromFile($filepath)->toFile($filepath);
+                        Tinify::setKey($key);
+                        validate();
+                        fromFile($filepath)->toFile($filepath);
                     } catch (\Tinify\Exception $e) {
                         rex_logger::logException($e);
                     }
