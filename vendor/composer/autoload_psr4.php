@@ -7,6 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Tinify\\' => array($vendorDir . '/tinify/tinify/lib/Tinify'),
+    'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
+    'Symfony\\Polyfill\\Php73\\' => array($vendorDir . '/symfony/polyfill-php73'),
     'Symfony\\Component\\Process\\' => array($vendorDir . '/symfony/process'),
     'Symfony\\Component\\OptionsResolver\\' => array($vendorDir . '/symfony/options-resolver'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
