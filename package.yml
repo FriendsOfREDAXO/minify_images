@@ -5,11 +5,11 @@ supportpage: github.com/FriendsOfREDAXO/minify_images
 
 page:
     title: 'translate:title'
-    perm: minify_images[]
+    perm: 'minify_images[]'
     pjax: true
     subpages:
-        config: { title: 'translate:config', perm: minify_images[config] }
-        readme: { title: translate:readme, subPath: README.md }
+        config: { title: 'translate:config', perm: 'minify_images[config]' }
+        readme: { title: 'translate:readme', subPath: README.md }
 
 requires:
     redaxo: '^5.1'
